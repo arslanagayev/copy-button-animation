@@ -1,0 +1,166 @@
+/* Reel mode (?reel): a fixed 1080x1920 stage, scaled to fit the window, ready for screen recording. */
+body.reel { overflow: hidden; background: var(--bg); }
+body.reel .toolbar { display: none; }
+
+.reel-stage {
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  width: 1080px;
+  height: 1920px;
+  transform-origin: center;
+  transform: translate(-50%, -50%);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  /* Safe zone for Reels and TikTok: nothing important in the top 250px, the bottom 450px
+     (username, caption, audio) or the right 140px (like, comment, share). */
+  padding: 262px 140px 452px 64px;
+  background: var(--bg);
+}
+
+.reel-title { position: relative; text-align: center; }
+
+.reel-eyebrow {
+  display: inline-block;
+  margin-bottom: 26px;
+  padding: 12px 26px;
+  border-radius: 999px;
+  background: var(--canopy);
+  font: 700 22px/1 var(--font);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--lime);
+}
+
+/* Title in Canopy; the accent word sits in a Lime pill, the shape of every button here. */
+.reel-title h1 {
+  margin: 0;
+  font: 700 128px/0.95 var(--font);
+  letter-spacing: -0.045em;
+  color: var(--text);
+}
+
+.reel-title h1 span { display: inline-block; margin-top: 10px; padding: 0 22px 8px; border-radius: 999px; background: var(--canopy); color: var(--lime); }
+
+
+.reel-demo {
+  position: relative;
+  flex: 1;
+  min-height: 0;
+  display: grid;
+  place-items: center;
+}
+
+.reel-demo > * { transform: scale(var(--demo-scale, 1.6)); }
+
+.reel-code {
+  position: relative;
+  border-radius: 24px;
+  background: var(--canopy);
+  box-shadow: 0 30px 50px -26px var(--shadow-tint);
+  overflow: hidden;
+}
+
+.reel-code header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 18px 26px;
+  background: var(--canopy-deep);
+  color: var(--lime);
+  font: 600 21px/1 var(--font);
+}
+
+.reel-code header i { width: 14px; height: 14px; border-radius: 50%; display: inline-block; background: var(--lime); opacity: 0.35; }
+.reel-code header i:nth-child(1) { opacity: 1; }
+.reel-code header i:nth-child(3) { margin-right: 10px; }
+
+.reel-code pre { margin: 0; padding: 24px 30px 30px; font: 500 22px/1.55 ui-monospace, "SF Mono", Menlo, monospace; color: #eef7d6; white-space: pre; }
+
+/* Token colours used by highlight() in reel.js: a dark code window lit in Turmeric. */
+.tk-k { color: var(--lime); font-weight: 700; }
+.tk-s { color: #f1ffc4; }
+.tk-n { color: var(--lime); }
+.tk-c { color: rgb(238 247 214 / 0.5); font-style: italic; }
+.tk-f { color: #f8ffe0; font-weight: 700; }
+.tk-p { color: #eef7d6; opacity: 0.85; }
+
+.reel-handle {
+  position: relative;
+  margin-top: 34px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+  color: var(--text);
+  font: 700 30px/1 var(--font);
+}
+
+.reel-handle img { width: 50px; height: 50px; border-radius: 50%; box-shadow: 0 0 0 3px var(--line); }
+
+/* End card */
+.reel-outro {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  align-content: center;
+  gap: 30px;
+  background: var(--bg);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.6s ease;
+  text-align: center;
+}
+
+.reel-outro.show { opacity: 1; }
+.reel-outro img { width: 210px; height: 210px; border-radius: 50%; box-shadow: 0 0 0 8px var(--lime), 0 30px 50px -20px var(--shadow-tint); }
+.reel-outro strong { font: 800 84px/1 var(--font); letter-spacing: -0.04em; color: var(--text); }
+.reel-outro p { margin: 0; color: var(--muted); font: 500 36px/1.2 var(--font); }
+.reel-outro b { color: var(--canopy); background: var(--lime); padding: 0 8px; border-radius: 8px; font-weight: 700; }
+
+/* Fake cursor used by the autoplay script */
+.reel-cursor {
+  position: absolute;
+  left: 0; /* moveTo() translates from the stage's top-left corner */
+  top: 0;
+  z-index: 50;
+  width: 44px;
+  height: 44px;
+  margin: -6px 0 0 -6px;
+  pointer-events: none;
+  transition: transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+  filter: drop-shadow(0 6px 10px rgb(0 0 0 / 0.35));
+}
+
+.reel-cursor::after {
+  content: "";
+  position: absolute;
+  left: 6px;
+  top: 6px;
+  width: 56px;
+  height: 56px;
+  margin: -28px 0 0 -28px;
+  border: 3px solid var(--canopy);
+  border-radius: 50%;
+  transform: scale(0);
+  opacity: 0;
+}
+
+.reel-cursor.press::after { animation: cursor-press 0.45s ease-out; }
+
+@keyframes cursor-press {
+  from { transform: scale(0.2); opacity: 1; }
+  to { transform: scale(1.4); opacity: 0; }
+}
+
+.reel .reel-hide, .autoplay .reel-hide, body.autoplay .toolbar { display: none !important; }
+
+.reel-stage.compact { padding: 70px 60px 44px; }
+.reel-stage.compact .reel-title h1 { font-size: 132px; }
+.reel-stage.compact .reel-eyebrow { margin-bottom: 18px; }
+
+/* ?autoplay recordings (540x675 for a 4:5 video): fill more of the frame. */
+body.autoplay .demo-page { padding: 16px; }
+body.autoplay .invite { scale: 1.3; }

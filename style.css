@@ -1,0 +1,196 @@
+/* The invite card: a Bauhaus poster on top, the copy field below. */
+.invite {
+  --w: 360px;
+  position: relative;
+  width: min(var(--w), calc(100vw - 32px));
+  border-radius: 28px;
+  overflow: hidden;
+  color: var(--on-card);
+  /* lime under the poster so its rounded corners never show a dark fringe */
+  background: linear-gradient(var(--lime) 0 148px, var(--surface) 148px);
+  box-shadow: 0 0 0 2.5px var(--canopy), 0 30px 50px -28px var(--shadow-tint);
+}
+
+/* ---------- Poster: pure geometry ---------- */
+.poster { position: relative; height: 148px; overflow: hidden; background: var(--lime); }
+.shape { position: absolute; display: block; }
+.sun { width: 168px; height: 168px; right: -34px; top: -46px; border-radius: 50%; background: var(--canopy); }
+.dot { width: 34px; height: 34px; right: 52px; top: 50px; border-radius: 50%; background: var(--lime); }
+.quarter { width: 104px; height: 104px; left: -2px; bottom: -2px; border-radius: 100% 0 0 0; background: var(--canopy); }
+.stripes {
+  width: 78px;
+  height: 78px;
+  left: 104px;
+  top: 22px;
+  border-radius: 50%;
+  background: repeating-linear-gradient(90deg, var(--canopy) 0 5px, transparent 5px 11px);
+}
+.bar { width: 132px; height: 16px; right: 22px; bottom: 20px; border-radius: 999px; background: var(--canopy); }
+
+/* ---------- Body ---------- */
+.invite-body { padding: 18px 20px 20px; }
+
+.club {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin: 0;
+  font: 600 12px/1 var(--font);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--on-card-muted);
+}
+
+.club svg { width: 15px; height: 15px; fill: currentColor; }
+.invite h1 { margin: 10px 0 6px; font: 700 30px/1.05 var(--font); letter-spacing: -0.025em; }
+.lede { margin: 0; font: 400 14px/1.45 var(--font); color: var(--on-card-muted); text-wrap: pretty; }
+
+/* ---------- Field and copy button ---------- */
+.field {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 18px;
+  padding: 5px 5px 5px 16px;
+  border-radius: 999px;
+  background: rgb(228 253 151 / 0.07);
+  box-shadow: inset 0 0 0 1.5px rgb(228 253 151 / 0.28);
+}
+
+
+.link {
+  position: relative;
+  z-index: 1;
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font: 500 12.5px/1 var(--mono);
+  letter-spacing: -0.02em;
+}
+
+/* The selection highlight that sweeps over the link when it is copied. */
+.sweep {
+  position: absolute;
+  left: 12px;
+  top: 9px;
+  bottom: 9px;
+  width: 0;
+  border-radius: 6px;
+  background: rgb(228 253 151 / 0.24);
+  pointer-events: none;
+}
+
+/* The copy of the link that flies into the button (created by script.js). */
+.ghost {
+  position: absolute;
+  z-index: 5;
+  white-space: nowrap;
+  font: 500 12.5px/1 var(--mono);
+  letter-spacing: -0.02em;
+  color: var(--canopy);
+  background: var(--lime);
+  padding: 4px 7px;
+  margin: -4px 0 0 -7px;
+  border-radius: 999px;
+  pointer-events: none;
+}
+
+.copy-wrap { position: relative; flex: none; }
+
+.copy {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  width: 104px;
+  height: 42px;
+  padding: 0 14px 0 12px;
+  border: 0;
+  border-radius: 999px;
+  background: var(--lime);
+  color: var(--canopy);
+  font: 600 15px/1 var(--font);
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.copy:hover { background: #effec0; }
+.copy:focus-visible { outline: 3px solid var(--lime); outline-offset: 3px; }
+
+/* A ring around the button that runs down while the "Copied" state lasts. */
+.ring { position: absolute; inset: -5px; width: calc(100% + 10px); height: calc(100% + 10px); overflow: visible; pointer-events: none; }
+.ring rect {
+  width: calc(100% - 3px);
+  height: calc(100% - 3px);
+  rx: 24px;
+  fill: none;
+  stroke: var(--lime);
+  stroke-width: 2.5;
+  stroke-linecap: round;
+  stroke-dasharray: 100;
+  stroke-dashoffset: 100;
+  opacity: 0; /* the round cap would leave a dot while idle */
+}
+
+.copy-icon { position: relative; display: grid; width: 18px; height: 18px; }
+.copy-icon svg { grid-area: 1 / 1; width: 100%; height: 100%; fill: currentColor; }
+.icon-check, .icon-error { opacity: 0; scale: 0.3; rotate: -90deg; }
+
+.copy-label { display: inline-flex; overflow: hidden; height: 1.2em; align-items: center; }
+.copy-label .ch { display: inline-block; white-space: pre; }
+
+/* Confirmation right where the eyes already are: above the button. */
+.tip {
+  position: absolute;
+  right: 0;
+  bottom: calc(100% + 14px);
+  padding: 8px 12px;
+  border-radius: 999px;
+  white-space: nowrap;
+  background: var(--canopy-deep);
+  color: var(--lime);
+  box-shadow: 0 0 0 1.5px rgb(228 253 151 / 0.45), 0 10px 20px -10px rgb(0 0 0 / 0.5);
+  font: 600 12.5px/1 var(--font);
+  opacity: 0;
+  pointer-events: none;
+}
+
+.tip::after {
+  content: "";
+  position: absolute;
+  right: 46px;
+  bottom: -5px;
+  width: 11px;
+  height: 11px;
+  rotate: 45deg;
+  background: var(--canopy-deep);
+  box-shadow: 1.5px 1.5px 0 rgb(228 253 151 / 0.45);
+}
+
+/* Error: the clipboard was refused, so the link is selected for a manual copy. */
+.copy.is-error { background: var(--canopy-soft); color: var(--lime); box-shadow: inset 0 0 0 1.5px var(--lime); }
+
+/* ---------- Members ---------- */
+.members { display: flex; align-items: center; gap: 10px; margin-top: 18px; font: 500 13px/1.3 var(--font); color: var(--on-card-muted); }
+.faces { display: flex; }
+.faces i {
+  display: grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  margin-left: -3px;
+  border-radius: 50%;
+  background: var(--lime);
+  color: var(--canopy);
+  box-shadow: 0 0 0 2.5px var(--surface);
+  font: 700 10px/1 var(--font);
+  font-style: normal;
+}
+.faces i:first-child { margin-left: 0; }
+.faces i:nth-child(2) { border-radius: 7px; background: var(--canopy-soft); color: var(--lime); }
+.faces i:nth-child(3) { border-radius: 50% 50% 0 50%; }
+.faces i:nth-child(4) { background: var(--canopy-soft); color: var(--lime); }

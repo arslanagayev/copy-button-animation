@@ -1,0 +1,103 @@
+/* Bauhaus geometric: Lime Sprout and Fresh Canopy, circles, quarter circles and stripes.
+   One shape rule: interactive things are pills, containers are 28px rounded, decoration is pure geometry. */
+@font-face {
+  font-family: "Outfit";
+  src: url("../assets/fonts/outfit-latin-var.woff2") format("woff2-variations");
+  font-weight: 300 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Red Hat Mono";
+  src: url("../assets/fonts/red-hat-mono-latin-var.woff2") format("woff2-variations");
+  font-weight: 400 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  --lime: #e4fd97;
+  --lime-deep: #c9ec5c;
+  --canopy: #2d3e2c;
+  --canopy-deep: #1f2b1e;
+  --canopy-soft: #3d523b;
+  --bg: var(--lime);
+  --surface: var(--canopy);
+  --text: var(--canopy);
+  --muted: rgb(45 62 44 / 0.66);
+  --on-card: var(--lime);
+  --on-card-muted: rgb(228 253 151 / 0.62);
+  --shadow-tint: rgb(31 43 30 / 0.35);
+  --font: "Outfit", system-ui, sans-serif;
+  --mono: "Red Hat Mono", ui-monospace, monospace;
+  color-scheme: light;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-reel]) {
+    --bg: #141c13;
+    --text: var(--lime);
+    --muted: rgb(228 253 151 / 0.62);
+    --shadow-tint: rgb(0 0 0 / 0.6);
+    color-scheme: dark;
+  }
+}
+
+* { box-sizing: border-box; }
+
+html, body { height: 100%; margin: 0; }
+
+body {
+  font-family: var(--font);
+  color: var(--text);
+  background: var(--bg);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Normal (non-reel) mode: the component centred, with a small toolbar. */
+.demo-page {
+  min-height: 100%;
+  display: grid;
+  place-items: center;
+  padding: 40px 16px 120px;
+}
+
+.toolbar {
+  position: fixed;
+  left: 50%;
+  bottom: 22px;
+  translate: -50% 0;
+  display: flex;
+  gap: 2px;
+  padding: 5px;
+  border-radius: 999px;
+  background: var(--canopy);
+  box-shadow: 0 10px 24px -12px var(--shadow-tint);
+}
+
+.toolbar a {
+  white-space: nowrap;
+  border-radius: 999px;
+  color: var(--lime);
+  text-decoration: none;
+  font-size: 13px;
+  font-weight: 600;
+  padding: 8px 14px;
+}
+
+.toolbar a:hover, .toolbar a:focus-visible { background: var(--lime); color: var(--canopy); outline: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 1ms !important; animation-iteration-count: 1 !important; transition-duration: 1ms !important; }
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}

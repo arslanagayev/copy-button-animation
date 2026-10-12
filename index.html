@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Copy button · UI animations</title>
+  <meta name="description" content="A copy button that shows you what it copied: the link is selected, a copy of it flies into the button, the icon turns into a check and a confirmation appears right where you are looking. Plain HTML, CSS and JavaScript.">
+  <meta name="theme-color" content="#e4fd97">
+  <link rel="preload" href="assets/fonts/outfit-latin-var.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="reel/theme.css">
+  <link rel="stylesheet" href="reel/reel.css">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main class="demo-page">
+    <section class="invite" aria-labelledby="invite-title">
+      <div class="poster" aria-hidden="true">
+        <span class="shape sun"></span>
+        <span class="shape quarter"></span>
+        <span class="shape stripes"></span>
+        <span class="shape dot"></span>
+        <span class="shape bar"></span>
+      </div>
+
+      <div class="invite-body">
+        <p class="club">
+          <svg viewBox="0 0 256 256" aria-hidden="true"><path d="M227.42,39.86a12,12,0,0,0-11.28-11.28c-39.6-2.33-74.59,2.34-104,13.87C84,53.48,62.31,70.58,49.39,91.9c-17.62,29.11-17.66,64.45-.45,98.19L31.51,207.52a12,12,0,0,0,17,17l17.43-17.43c16.74,8.54,33.88,12.85,50.45,12.85a91.31,91.31,0,0,0,47.74-13.3c21.32-12.92,38.42-34.62,49.45-62.75C225.08,114.46,229.75,79.46,227.42,39.86ZM151.66,186.08C131.57,198.25,108,199.17,83.94,189l84.54-84.54a12,12,0,1,0-17-17L67,172.06c-10.14-24-9.22-47.63,3-67.72,20.91-34.53,70.54-53.72,134-52.25C205.38,115.53,186.19,165.17,151.66,186.08Z"/></svg>
+          Sprout Club
+        </p>
+        <h1 id="invite-title">Invite your crew</h1>
+        <p class="lede">Anyone with this link can join the Saturday garden swap.</p>
+
+        <div class="field">
+          <span class="link" id="invite-link">sprout.club/join/8f3k29</span>
+          <span class="sweep" aria-hidden="true"></span>
+          <div class="copy-wrap">
+            <span class="tip" aria-hidden="true">Copied to clipboard</span>
+            <button class="copy" type="button" aria-describedby="invite-link">
+              <svg class="ring" aria-hidden="true"><rect x="1.5" y="1.5" rx="20" pathLength="100"/></svg>
+              <span class="copy-icon" aria-hidden="true">
+                <svg class="icon-copy" viewBox="0 0 256 256"><path d="M216,28H88A12,12,0,0,0,76,40V76H40A12,12,0,0,0,28,88V216a12,12,0,0,0,12,12H168a12,12,0,0,0,12-12V180h36a12,12,0,0,0,12-12V40A12,12,0,0,0,216,28ZM156,204H52V100H156Zm48-48H180V88a12,12,0,0,0-12-12H100V52H204Z"/></svg>
+                <svg class="icon-check" viewBox="0 0 256 256"><path d="M232.49,80.49l-128,128a12,12,0,0,1-17,0l-56-56a12,12,0,1,1,17-17L96,183,215.51,63.51a12,12,0,0,1,17,17Z"/></svg>
+                <svg class="icon-error" viewBox="0 0 256 256"><path d="M128,20A108,108,0,1,0,236,128,108.12,108.12,0,0,0,128,20Zm0,192a84,84,0,1,1,84-84A84.09,84.09,0,0,1,128,212Zm-12-80V80a12,12,0,0,1,24,0v52a12,12,0,0,1-24,0Zm28,40a16,16,0,1,1-16-16A16,16,0,0,1,144,172Z"/></svg>
+              </span>
+              <span class="copy-label">Copy</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="members">
+          <span class="faces" aria-hidden="true"><i>AY</i><i>MK</i><i>LO</i><i>+9</i></span>
+          <span>12 members · 3 joined this week</span>
+        </div>
+      </div>
+    </section>
+
+    <p class="visually-hidden" role="status" aria-live="polite"></p>
+  </main>
+
+  <nav class="toolbar" aria-label="Demo links">
+    <a href="https://www.instagram.com/arslanagayev.dev/">More animations</a>
+    <a href="?reel">Reel mode</a>
+    <a href="https://github.com/arslanagayev/copy-button-animation">Source</a>
+  </nav>
+
+  <script type="module" src="script.js"></script>
+</body>
+</html>
